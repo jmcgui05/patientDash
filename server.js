@@ -22,6 +22,7 @@ app.get('/patientList', function(req, res) {
 
 });
 
+//TODO ran out of time. Include updating record here, when server gets input data
 app.post('/patientList', function(req, res) {
   console.log('>>>>> ', req.body);
 })
