@@ -57,8 +57,6 @@ module.exports = mongoose.model('ptrels', {
     name: String
   },
   history: [{
-    ts: {
-      date: Date
-    }
+    ts: Date
   }]
 });

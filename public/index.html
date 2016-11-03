@@ -8,6 +8,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/961e6d3021.js"></script>
     <title>Patient Dashboard</title>
 </head>
 <body>
@@ -17,23 +18,52 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Patient Name</th>
+                <th ng-show="show">Update Name</th>
+                <th>
+                    <a href="#" ng-click="sortType = patient.meta.name.sortable; sortReverse = !sortReverse">
+                        Patient Name
+                        <span ng-show="sortType == 'patient.meta.name.sortable' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'patient.meta.name.sortable' && sortReverse" class="fa up"></span>
+                    </a>
+                </th>
                 <th>DOB</th>
-                <th>Unique Patient #</th>
+                <th>
+                    <a href="#" ng-click="sortType = patient.meta.office.unumber; sortReverse = !sortReverse">
+                        Unique Patient #
+                        <span ng-show="sortType == 'patient.meta.office.unumber' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'patient.meta.office.unumber' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
                 <th>Patient's Office</th>
                 <th>Referring Provider</th>
-                <th>Treating Office</th>
+                <th>
+                    <a href="#" ng-click="sortType = treating.office.name; sortReverse = !sortReverse">
+                        Treating Office
+                        <span ng-show="sortType == 'treating.office.name' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'treating.office.name' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
                 <th>Trial</th>
                 <th>Appointment</th>
                 <th>Scheduled OutReach Time</th>
                 <th>Status</th>
                 <th>Last Contact Date</th>
-                <th>Last Transition Date</th>
+                <th>
+                    <a href="#" ng-click="sortType = history[0].ts; sortReverse = !sortReverse">
+                        Last Transition Date
+                        <span ng-show="sortType == 'history[0].ts' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'history[0].ts' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
             </tr>
             </thead>
-            <tbody ng-repeat="object in patientList">
-            <tr></tr>
-                <td>{{object.patient.meta.name.sortable}}</td>
+            <tbody ng-repeat="object in patientList | orderBy:sortType:sortReverse | filter:searchTrial">
+            <tr>
+                <td ng-show="show">
+                    <input class="form-control" ng-model="object.patient.meta.name.sortable">
+                    <button class="btn btn-primary" ng-click="updatePatient()">Confirm</button>
+                </td>
+                <td><a href="#" ng-click="show = !show">{{object.patient.meta.name.sortable}}</td>
                 <td>{{object.patient.meta.dob | date:'dd-MMM-yyyy'}}</td>
                 <td>{{object.patient.meta.office.unumber}}</td>
                 <td>{{object.patient.meta.office.name}}</td>
@@ -44,7 +74,8 @@
                 <td>{{object.outreachData.queueDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{object.status.name}}</td>
                 <td>{{object.outreachData.lastCall.ts | date:'dd-MMM-yyyy'}}</td>
-                <td>{{object.history[0]}.ts | date:'dd-MMM-yyyy'}</td>
+                <td>{{object.history[0].ts} | date:'dd-MMM-yyyy'}</td>
+            </tr>
             </tbody>
         </table>
     </div>
