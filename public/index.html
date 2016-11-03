@@ -31,6 +31,21 @@
                 <th>Last Transition Date</th>
             </tr>
             </thead>
+            <tbody ng-repeat="object in patientList">
+            <tr></tr>
+                <td>{{object.patient.meta.name.sortable}}</td>
+                <td>{{object.patient.meta.dob | date:'dd-MMM-yyyy'}}</td>
+                <td>{{object.patient.meta.office.unumber}}</td>
+                <td>{{object.patient.meta.office.name}}</td>
+                <td>{{object.referring.provider.name.sortable}}</td>
+                <td>{{object.treating.office.name}}</td>
+                <td>{{object.treatment.name}}</td>
+                <td>{{object.treatment.date | date:'dd-MMM-yyyy'}}</td>
+                <td>{{object.outreachData.queueDate | date:'dd-MMM-yyyy'}}</td>
+                <td>{{object.status.name}}</td>
+                <td>{{object.outreachData.lastCall.ts | date:'dd-MMM-yyyy'}}</td>
+                <td>{{object.history[0]}.ts | date:'dd-MMM-yyyy'}</td>
+            </tbody>
         </table>
     </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
