@@ -2,6 +2,9 @@ var patientApp = angular.module('patientApp', []);
 
 patientApp.filter('offset', function() {
   return function(input, start) {
+    if(input === undefined) {
+      input = 'Loading'; //TODO hack to avoid console error while data is loading
+    }
     start = parseInt(start, 10);
     return input.slice(start);
   };
