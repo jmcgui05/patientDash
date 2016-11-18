@@ -57,7 +57,9 @@
                 </th>
             </tr>
             </thead>
-            <tbody ng-repeat="object in patientList | orderBy:sortType:sortReverse | filter:searchTrial">
+            <tbody ng-repeat="object in patientList | orderBy:sortType:sortReverse | filter:searchTrial
+                                | offset: currentPage*itemsPerPage |
+                                        limitTo: itemsPerPage">
             <tr>
                 <td ng-show="show">
                     <input class="form-control" ng-model="object.patient.meta.name.sortable">
@@ -78,6 +80,24 @@
             </tr>
             </tbody>
         </table>
+        <tfoot>
+        <td colspan="3">
+            <div class="pagination">
+                <ul>
+                    <li ng-class="prevPageDisabled()">
+                        <a href ng-click="prevPage()">« Prev</a>
+                    </li>
+                    <li ng-repeat="n in range()"
+                        ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                        <a href="#">{{n+1}}</a>
+                    </li>
+                    <li ng-class="nextPageDisabled()">
+                        <a href ng-click="nextPage()">Next »</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+        </tfoot>
     </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 <script src="controllers/controller.js"></script>
